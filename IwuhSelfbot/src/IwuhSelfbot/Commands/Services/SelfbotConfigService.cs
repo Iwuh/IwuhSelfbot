@@ -11,6 +11,7 @@ namespace IwuhSelfbot.Commands.Services
     {
         public string Token { get; private set; }
         public string Prefix { get; private set; }
+        public ulong UserId { get; private set; }
 
         /// <summary>
         /// Creates a new instance, reading the token and prefix from the config file.
@@ -20,6 +21,7 @@ namespace IwuhSelfbot.Commands.Services
             JObject config = JObject.Parse(File.ReadAllText(@".\SelfbotConfig.json"));
             Token = (string)config["Token"];
             Prefix = (string)config["Prefix"];
+            UserId = (ulong)config["ID"];
         }
     }
 }

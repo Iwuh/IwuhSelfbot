@@ -14,12 +14,10 @@ namespace IwuhSelfbot.Commands
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IDependencyMap _map;
-        private ulong _userId;
 
         public async Task InstallAsync(IDependencyMap map)
         {
             _client = map.Get<DiscordSocketClient>();
-            _userId = _client.CurrentUser.Id;
 
             _commands = new CommandService();
             map.Add(_commands);
@@ -42,7 +40,7 @@ namespace IwuhSelfbot.Commands
             var userMessage = msg as SocketUserMessage;
             if (userMessage == null) return;
             // Only allow commands to be executed by the person running the bot.
-            if (userMessage.Author.Id != _userId) return;
+            if (userMessage.Author.Id != _map.Get<SelfbotConfigService>().UserId) return;
 
             int argPos = 0;
             if (userMessage.HasStringPrefix(_map.Get<SelfbotConfigService>().Prefix, ref argPos))
