@@ -23,7 +23,8 @@ namespace IwuhSelfbot
             _client = new DiscordSocketClient(new DiscordSocketConfig()
             {
                 // Set only general info to be logged.
-                LogLevel = LogSeverity.Info
+                LogLevel = LogSeverity.Info,
+                MessageCacheSize = 1000
             });
 
             _client.Log += message =>

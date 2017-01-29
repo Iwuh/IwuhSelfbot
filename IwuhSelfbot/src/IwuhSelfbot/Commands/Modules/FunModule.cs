@@ -26,5 +26,43 @@ namespace IwuhSelfbot.Commands.Modules
             // Send the "me" message.
             await ReplyAsync(string.Empty, embed: meEmbed);
         }
+
+        [Command("quote")]
+        [Summary("Shows a message that somebody else wrote. Does not quote embeds. Note: due to a user account restriction, certain messages may not be able to be quoted.")] 
+        public async Task QuoteMessage([Summary("The ID of the message to quote.")] ulong id)
+        {
+            // Users can't access the get message endpoint, but they _can_ access the get messages endpoint.
+            var messages = await Context.Channel.GetMessagesAsync(id, Direction.Around, limit: 3).Flatten();
+            var message = messages.First(m => m.Id == id);
+
+            // Don't quote any message that's only an embed with no text.
+            if (message.Content == string.Empty && message.Embeds.Count > 0)
+            {
+                await ReplyAsync("The quoted message must have text.");
+                return;
+            }
+
+            // Get the image attachment, if there is one.
+            IAttachment image = message.Attachments.FirstOrDefault(a =>
+            {
+                string lower = a.Filename.ToLower();
+                // Check if it ends with any of these common image file extensions.
+                return lower.EndsWith(".png") || lower.EndsWith(".jpg") || lower.EndsWith(".jpeg") || lower.EndsWith(".gif");
+            });
+
+            EmbedBuilder quoteBuilder = new EmbedBuilder()
+                .WithAuthor(new EmbedAuthorBuilder() { IconUrl = message.Author.AvatarUrl, Name = message.Author.ToString() })
+                .WithColor(message.Author.GetHighestRoleColor(Context.Guild))
+                .WithDescription(message.Content)
+                .WithTimestamp(message.Timestamp);
+
+            if (image != null)
+            {
+                quoteBuilder.WithImageUrl(image.Url);
+            }
+
+            await Context.Message.DeleteAsync();
+            await ReplyAsync(string.Empty, embed: quoteBuilder);
+        }
     }
 }
