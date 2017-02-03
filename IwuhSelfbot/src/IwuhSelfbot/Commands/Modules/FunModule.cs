@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace IwuhSelfbot.Commands.Modules
@@ -63,6 +64,44 @@ namespace IwuhSelfbot.Commands.Modules
 
             await Context.Message.DeleteAsync();
             await ReplyAsync(string.Empty, embed: quoteBuilder);
+        }
+
+        [Command("poll")]
+        [Summary("Creates a pool that people can respond to via reactions. Usage: `question|option 1|option 2|etc...`")]
+        [RequireBotPermission(ChannelPermission.AddReactions)]
+        public async Task CreatePoll([Remainder, Summary("Creates a message with a question and several reaction options.")] string input)
+        {
+            const int REGIONAL_INDICATOR_A = 0x1F1E6;
+            const string THUMBS_UP = "👍";
+            const string THUMBS_DOWN = "👎";
+            const string CLIPBOARD = "📋";
+
+            var split = input.Split('|');
+
+            if (split.Length == 1)
+            {
+                await Context.Message.ModifyAsync(m => m.Content = $"{CLIPBOARD}{Format.Italics(split[0])}");
+                await Context.Message.AddReactionAsync(THUMBS_UP);
+                await Context.Message.AddReactionAsync(THUMBS_DOWN);
+            }
+            else
+            {
+                var pollBuilder = new StringBuilder($"{CLIPBOARD}{Format.Italics(split[0])}\n");
+                var emojiList = new List<string>();
+
+                for (int i = 1; i < split.Length; i++)
+                {
+                    string currentEmoji = char.ConvertFromUtf32(REGIONAL_INDICATOR_A + i - 1);
+                    pollBuilder.AppendLine($"{currentEmoji} {split[i]}");
+                    emojiList.Add(currentEmoji);
+                }
+
+                await Context.Message.ModifyAsync(m => m.Content = pollBuilder.ToString());
+                foreach (string emoji in emojiList)
+                {
+                    await Context.Message.AddReactionAsync(emoji);
+                }
+            }
         }
     }
 }
