@@ -23,15 +23,17 @@ namespace IwuhSelfbot.Commands
             map.Add(_commands);
             _map = map;
 
-            AddServices(_map);
+            await AddServices(_map);
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly());
 
             _client.MessageReceived += HandleCommand;
         }
 
-        private void AddServices(IDependencyMap map)
+        private async Task AddServices(IDependencyMap map)
         {
             map.Add(new SelfbotConfigService());
+            map.Add(new EmojiService(_client, _map.Get<SelfbotConfigService>().UserId));
+            await map.Get<EmojiService>().LoadEmojisAsync();
         }
 
         private async Task HandleCommand(SocketMessage msg)
