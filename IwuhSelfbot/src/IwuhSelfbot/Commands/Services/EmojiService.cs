@@ -79,6 +79,18 @@ namespace IwuhSelfbot.Commands.Services
             return false;
         }
 
+        public string ListEmojis()
+        {
+            var emojiListBuilder = new StringBuilder();
+
+            foreach (var pair in _emojis)
+            {
+                emojiListBuilder.AppendLine($"`{pair.Key}` - {pair.Value}");
+            }
+
+            return emojiListBuilder.ToString();
+        }
+
         private async Task SaveEmojisAsync()
         {
             using (FileStream emojiStream = File.Open(@".\emojis.json", FileMode.Truncate))
