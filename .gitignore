@@ -269,3 +269,4 @@ __pycache__/
 
 # Selfbot specific files
 SelfbotConfig.json
+emojis.json
