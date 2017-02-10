@@ -21,7 +21,7 @@ namespace IwuhSelfbot.Commands.Services
                 .WithReferences(typeof(object).GetTypeInfo().Assembly, typeof(Enumerable).GetTypeInfo().Assembly, typeof(Discord.Embed).GetTypeInfo().Assembly,
                                 typeof(Discord.WebSocket.DiscordShardedClient).GetTypeInfo().Assembly, typeof(Discord.Commands.ModuleBase).GetTypeInfo().Assembly)
                 .WithImports("System", "System.Linq", "System.Text", "System.Threading.Tasks", "System.Collections.Generic", "System.Reflection", 
-                             "Discord", "Discord.WebScocket", "Discord.Commands");
+                             "Discord", "Discord.WebSocket", "Discord.Commands");
         }
 
         public async Task<EvalResult> EvaluateAsync(string input, CommandContext context)

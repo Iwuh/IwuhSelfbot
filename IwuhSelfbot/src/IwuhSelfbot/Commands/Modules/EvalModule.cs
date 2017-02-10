@@ -26,11 +26,11 @@ namespace IwuhSelfbot.Commands.Modules
 
             if (result.IsSuccessful)
             {
-                await ReplyAsync($"Input:\n{Format.Code(expr)}\nOutput:\n{Format.Code(result.Output)}");
+                await ReplyAsync($"Input:\n```{expr}```\nOutput:\n```{result.Output}```");
             }
             else
             {
-                await ReplyAsync($"Exception:\n{Format.Code(result.Output)}");
+                await ReplyAsync($"Exception:\n```{result.Output}```");
             }
         }
     }
