@@ -1,4 +1,5 @@
 ﻿using Discord.Commands;
+using Discord.WebSocket;
 using IwuhSelfbot.Commands.Entities;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
@@ -23,13 +24,13 @@ namespace IwuhSelfbot.Commands.Services
                              "Discord", "Discord.WebScocket", "Discord.Commands");
         }
 
-        public async Task<EvalResult> EvaluateAsync(string input, SocketCommandContext context)
+        public async Task<EvalResult> EvaluateAsync(string input, CommandContext context)
         {
             bool successful;
             string output;
             try
             {
-                object result = await CSharpScript.EvaluateAsync(input, options: _evalOptions, globals: new EvalGlobals(context.Client, context));
+                object result = await CSharpScript.EvaluateAsync(input, options: _evalOptions, globals: new EvalGlobals(context.Client as DiscordSocketClient, context));
 
                 // If we get this far, the evaluation succeeded.
                 successful = true;

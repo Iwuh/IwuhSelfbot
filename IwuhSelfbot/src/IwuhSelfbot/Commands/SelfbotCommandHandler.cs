@@ -34,6 +34,7 @@ namespace IwuhSelfbot.Commands
             map.Add(new SelfbotConfigService());
             map.Add(new EmojiService(_client, _map.Get<SelfbotConfigService>().UserId));
             await map.Get<EmojiService>().LoadEmojisAsync();
+            map.Add(new EvalService());
         }
 
         private async Task HandleCommand(SocketMessage msg)
