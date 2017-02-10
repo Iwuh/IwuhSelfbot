@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace IwuhSelfbot.Commands.Modules
 {
-    public class EvalModule : ModuleBase
+    public class UtilityModule : ModuleBase
     {
         private EvalService _evaluator;
 
-        public EvalModule(EvalService eval)
+        public UtilityModule(EvalService eval)
         {
             _evaluator = eval;
         }
