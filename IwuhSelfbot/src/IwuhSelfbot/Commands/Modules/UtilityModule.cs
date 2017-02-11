@@ -12,10 +12,12 @@ namespace IwuhSelfbot.Commands.Modules
     public class UtilityModule : ModuleBase
     {
         private EvalService _evaluator;
+        private SelfbotConfigService _config;
 
-        public UtilityModule(EvalService eval)
+        public UtilityModule(EvalService eval, SelfbotConfigService conf)
         {
             _evaluator = eval;
+            _config = conf;
         }
 
         [Command("eval")]
@@ -33,5 +35,7 @@ namespace IwuhSelfbot.Commands.Modules
                 await Context.Message.ModifyAsync(m => m.Content = $"Exception:\n```{result.Output}```");
             }
         }
+
+
     }
 }
