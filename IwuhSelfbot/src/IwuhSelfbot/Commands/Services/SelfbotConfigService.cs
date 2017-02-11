@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace IwuhSelfbot.Commands.Services
@@ -28,7 +29,25 @@ namespace IwuhSelfbot.Commands.Services
 
         private TimeZoneInfo ParseTimezone(string timezone)
         {
-            return TimeZoneInfo.FindSystemTimeZoneById(timezone);
+            if (timezone != string.Empty)
+            {
+                try
+                {
+                    return TimeZoneInfo.FindSystemTimeZoneById(timezone);
+                }
+                catch (Exception e) when (e.GetType().ToString() == "System.TimeZoneNotFoundException")
+                {
+                    /*
+                     * So, a bit of explanation. In .NET Core 1.1, TimeZoneNotFoundException isn't exposed publicly.
+                     * However, we still need to catch it. The workaround we use here is catching a generic exception,
+                     * then filtering to only catch TimeZoneNotFoundException by getting the type, converting it to a
+                     * string, then comparing it to the string literal ToString() will return if e is a TimeZoneNotFoundException.
+                     */
+                    Console.WriteLine("Invalid timezone, using system default.");
+                }
+            }
+
+            return TimeZoneInfo.Local;   
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using IwuhSelfbot.Commands.Entities;
 using IwuhSelfbot.Commands.Services;
 using System;
@@ -36,6 +37,17 @@ namespace IwuhSelfbot.Commands.Modules
             }
         }
 
+        [Command("time")]
+        [Summary("Gets your current time.")]
+        public async Task CurrentTime()
+        {
+            var now = DateTimeOffset.Now;
+            var converted = TimeZoneInfo.ConvertTime(now, _config.Timezone);
 
+            // Cast the user to a socket guild user and get the nickname. If that's null, use the username instead.
+            string nameToUse = (Context.User as SocketGuildUser)?.Nickname ?? Context.User.Username;
+
+            await Context.Message.ModifyAsync(m => m.Content = $"The current time for {Format.Bold(nameToUse)} is `{converted.TimeOfDay.ToString(@"hh\:mm")}`.");
+        }
     }
 }
