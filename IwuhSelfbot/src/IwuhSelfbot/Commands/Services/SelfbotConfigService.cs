@@ -46,6 +46,10 @@ namespace IwuhSelfbot.Commands.Services
                     Console.WriteLine("Invalid timezone, using system default.");
                 }
             }
+            else
+            {
+                Console.WriteLine("No timezone specified, using system default.");
+            }
 
             return TimeZoneInfo.Local;   
         }
