@@ -14,6 +14,7 @@ namespace IwuhSelfbot.Commands.Services
         public string Prefix { get; private set; }
         public ulong UserId { get; private set; }
         public TimeZoneInfo Timezone { get; private set; }
+        public bool EvalEnabled { get; private set; }
 
         /// <summary>
         /// Creates a new instance, reading the token and prefix from the config file.
@@ -25,6 +26,7 @@ namespace IwuhSelfbot.Commands.Services
             Prefix = (string)config["Prefix"];
             UserId = (ulong)config["ID"];
             Timezone = ParseTimezone((string)config["Timezone"]);
+            EvalEnabled = (bool)config["Eval"];
         }
 
         private TimeZoneInfo ParseTimezone(string timezone)

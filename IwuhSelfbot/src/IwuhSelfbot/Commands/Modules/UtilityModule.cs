@@ -25,15 +25,22 @@ namespace IwuhSelfbot.Commands.Modules
         [Summary("[Advanced] Evaluate a C# expression using the Roslyn Scripting API.")]
         public async Task EvaluateExpression([Remainder, Summary("The C# expression to evaluate.")] string expr)
         {
-            EvalResult result = await _evaluator.EvaluateAsync(expr, Context);
-
-            if (result.IsSuccessful)
+            if (!_config.EvalEnabled)
             {
-                await Context.Message.ModifyAsync(m => m.Content = $"Input:\n```{expr}```\nOutput:\n```{result.Output}```");
+                await Context.Message.ModifyAsync(m => m.Content = "Eval is a potentially dangerous command, and **should not** be used if you don't understand what you're doing. If you want to enable it, set 'Eval' to `true` in the config.");
             }
             else
             {
-                await Context.Message.ModifyAsync(m => m.Content = $"Exception:\n```{result.Output}```");
+                EvalResult result = await _evaluator.EvaluateAsync(expr, Context);
+
+                if (result.IsSuccessful)
+                {
+                    await Context.Message.ModifyAsync(m => m.Content = $"Input:\n```{expr}```\nOutput:\n```{result.Output}```");
+                }
+                else
+                {
+                    await Context.Message.ModifyAsync(m => m.Content = $"Exception:\n```{result.Output}```");
+                }
             }
         }
 
