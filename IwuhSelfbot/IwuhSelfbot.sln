@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{656A825D-F6D0-4AAA-BAFA-6EE53A08727E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B0A29A0-DF2B-4ADF-B688-2C6721227CAA}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IwuhSelfbot", "src\IwuhSelfbot\IwuhSelfbot.xproj", "{C64185B9-6DDF-4A3C-9CD5-BAD8CB98C7D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IwuhSelfbot", "src\IwuhSelfbot\IwuhSelfbot.csproj", "{C64185B9-6DDF-4A3C-9CD5-BAD8CB98C7D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
