@@ -12,6 +12,7 @@ namespace IwuhSelfbot.Commands.Modules
         public async Task SetGame([Remainder, Summary("The text to set as your currently playing game.")] string game)
         {
             await (Context.Client as DiscordSocketClient).SetGameAsync(game);
+            await ReplyAsync($"Game set to `{game}`. This will appear for everybody else, but you will not see it in your own client.");
         }
     }
 }
