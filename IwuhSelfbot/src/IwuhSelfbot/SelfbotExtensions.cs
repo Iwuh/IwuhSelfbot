@@ -20,8 +20,8 @@ namespace IwuhSelfbot
             }
             else
             {
-                // Convert each role ID to a role object, then order them by position in the hierarchy (highest first).
-                var roles = guildUser.RoleIds.Select(r => guild.GetRole(r)).OrderByDescending(r => r.Position);
+                // Order the roles by position in the hierarchy (highest first).
+                var roles = guildUser.Roles.OrderByDescending(r => r.Position);
 
                 // If none of the roles have a colour...
                 if (!roles.Any(r => !r.Color.Equals(Color.Default)))

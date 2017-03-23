@@ -45,7 +45,7 @@ namespace IwuhSelfbot
             // Get the token from the config service, login, and connect.
             string token = _map.Get<SelfbotConfigService>().Token;
             await _client.LoginAsync(TokenType.User, token);
-            await _client.ConnectAsync();
+            await _client.StartAsync();
 
             // Delay asynchronously for an infinite amount of time, preventing the program from exiting but not blocking the thread.
             await Task.Delay(-1);

@@ -52,7 +52,7 @@ namespace IwuhSelfbot.Commands.Modules
             });
 
             EmbedBuilder quoteBuilder = new EmbedBuilder()
-                .WithAuthor(new EmbedAuthorBuilder() { IconUrl = message.Author.AvatarUrl, Name = message.Author.ToString() })
+                .WithAuthor(new EmbedAuthorBuilder() { IconUrl = message.Author.GetAvatarUrl(), Name = message.Author.ToString() })
                 .WithColor(message.Author.GetHighestRoleColor(Context.Guild))
                 .WithDescription(message.Content)
                 .WithTimestamp(message.Timestamp);
