@@ -20,7 +20,6 @@ namespace IwuhSelfbot.Commands
             _client = map.Get<DiscordSocketClient>();
 
             _commands = new CommandService();
-            map.Add(_commands);
             _map = map;
 
             await AddServices(_map);
